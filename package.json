@@ -1,0 +1,22 @@
+{
+  "name": "littre-pwa",
+  "version": "1.0.0",
+  "description": "Dictionnaire de la langue française d'Émile Littré — PWA",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "init:data": "./build/init-data.sh",
+    "build:data": "uv run python build/xml_to_json.py --input ./xmlittre-data --output ./public/data",
+    "compress:data": "gzip --best -f -k public/data/*.json",
+    "build:all": "npm run build:data && npm run compress:data && npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "vite": "^5.4.0",
+    "vitest": "^4.1.5"
+  }
+}

@@ -1,0 +1,8 @@
+[project]
+name = "littre-build"
+version = "0.1.0"
+description = "Littré PWA build pipeline and tests"
+requires-python = ">=3.10"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]

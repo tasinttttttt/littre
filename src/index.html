@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self';"
+    />
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="Dictionnaire de la langue française d'Émile Littré"
+    />
+    <meta name="theme-color" content="#2c1e0f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <title>Littré — Dictionnaire de la langue française</title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/png" href="/icons/192.png" />
+    <link rel="apple-touch-icon" href="/icons/192.png" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-inner">
+        <h1 class="app-title">
+          <span>Littré</span>
+        </h1>
+        <div class="header-actions">
+          <button
+            id="font-btn"
+            class="action-btn"
+            aria-label="Taille de police"
+            title="Taille de police"
+          >
+            <span>Aa</span>
+          </button>
+          <button
+            id="theme-btn"
+            class="action-btn"
+            aria-label="Thème"
+            title="Thème"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16" />
+            </svg>
+          </button>
+          <button
+            id="cache-btn"
+            class="action-btn"
+            aria-label="Cache hors-ligne"
+            title="Cache hors-ligne"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11 2H9v3h2z" />
+              <path
+                d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="search-container">
+        <form id="search-form" role="search">
+          <input
+            id="search-input"
+            type="search"
+            placeholder="Rechercher un mot..."
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Rechercher un mot"
+          />
+          <button type="submit" class="search-btn" aria-label="Rechercher">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+              />
+            </svg>
+          </button>
+        </form>
+        <div
+          id="autocomplete-list"
+          class="autocomplete-list"
+          role="listbox"
+          aria-label="Suggestions"
+        ></div>
+      </div>
+    </header>
+
+    <main id="main-content" class="main-content">
+      <div id="entry-view" class="entry-view hidden"></div>
+      <div id="home-view" class="home-view">
+        <div class="home-content">
+          <p class="home-subtitle">
+            Dictionnaire de la langue française d'Émile Littré
+          </p>
+          <p class="home-hint">Recherchez un mot pour commencer</p>
+        </div>
+      </div>
+      <div id="not-found-view" class="not-found-view hidden">
+        <p class="not-found-text">Aucune entrée trouvée pour ce mot.</p>
+      </div>
+      <div id="loading-view" class="loading-view hidden">
+        <div class="spinner"></div>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <p>
+        Données :
+        <a href="https://www.littre.org" target="_blank" rel="noopener"
+          >XMLittré</a
+        >
+        par François Gannaz — CC-BY-SA 3.0
+      </p>
+    </footer>
+
+    <div id="font-panel" class="font-panel hidden">
+      <div class="font-panel-inner">
+        <span class="font-label">Taille</span>
+        <button id="font-decrease" class="font-btn" aria-label="Réduire">
+          A-
+        </button>
+        <button id="font-increase" class="font-btn" aria-label="Agrandir">
+          A+
+        </button>
+        <button id="font-close" class="font-close-btn" aria-label="Fermer">
+          ×
+        </button>
+      </div>
+    </div>
+
+    <div id="cache-panel" class="cache-panel hidden">
+      <div class="cache-panel-inner">
+        <span id="cache-version" class="cache-version"></span>
+        <button id="cache-download" class="cache-action-btn">
+          Télécharger toutes les lettres
+        </button>
+        <button id="cache-rebuild" class="cache-action-btn">
+          Reconstruire le cache
+        </button>
+        <div id="cache-progress" class="cache-progress hidden">
+          <div class="cache-progress-bar">
+            <div
+              id="cache-progress-fill"
+              class="cache-progress-fill"
+              style="width: 0%"
+            ></div>
+          </div>
+          <span id="cache-progress-text" class="cache-progress-text"></span>
+        </div>
+        <button id="cache-close" class="cache-close-btn" aria-label="Fermer">
+          ×
+        </button>
+      </div>
+    </div>
+
+    <div id="update-toast" class="update-toast hidden">
+      <span>Nouvelle version disponible.</span>
+      <button id="update-btn" class="update-btn">Mettre à jour</button>
+    </div>
+
+    <script type="module" src="/app.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/sw.js");
+        });
+      }
+    </script>
+  </body>
+</html>
